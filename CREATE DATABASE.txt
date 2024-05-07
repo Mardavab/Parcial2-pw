@@ -1,0 +1,44 @@
+CREATE DATABASE parqueadero;
+USE parqueadero;
+
+CREATE TABLE user (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,
+    password VARCHAR(255),
+    username VARCHAR(255)
+);
+
+CREATE TABLE vehicle (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    placa INT(6),
+    hora_entrada INT DEFAULT 0,
+    hora_salida INT DEFAULT 0,
+    ubicacion VARCHAR(255) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    id_type INT,
+    CONSTRAINT id_vihucle_type FOREIGN KEY (id_type) REFERENCES VehicleType(id) ON DELETE CASCADE
+);
+
+CREATE TABLE VehicleType (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    TypeName VARCHAR(255) NOT NULL,
+    PassengerCapacity INT,
+    FuelType VARCHAR(50),
+    TransmissionType VARCHAR(50)
+);
+
+CREATE TABLE role (
+    id_role INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    id_user INT,
+    CONSTRAINT id_role_user FOREIGN KEY (id_user) REFERENCES user(id_user) ON DELETE CASCADE
+);
+
+INSERT INTO user (password, username) VALUES
+('Admin', 'Admin'),
+('User', 'User');
+
+INSERT INTO role (name, id_user) VALUES
+('ROLE_ADMIN', 1),
+('ROLE_USER', 2),
+('ROLE_USER', 1);
+
